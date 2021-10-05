@@ -16,8 +16,6 @@
   ## Table of Contents 
   * [Application](#Application)
   * [Tools](#Tools)
-  * [Features](#Features)
-  * [License](#license)
   * [Contributing](#contributing)
   * [Questions](#questions)
   
@@ -39,41 +37,8 @@ https://frozen-atoll-29028.herokuapp.com/
 * HTML and CSS
 * Heroku
 
-  ## Features
-
-* Search Books, 
-
-![main page]()
-
-* Login or Signup:
-
-![login or signup]()
-
-* Save Books:
-
-![save a book]()
-
-* Remove Books:
-
-![remove book]()
-
-  ## License
-
-    Copyright © 2020 florhaidee. 
-    Licensed under the MIT to see more about this license you can find it on the file 'license.txt' go to [MIT-license](LICENSE) 
-
-
   ## Contributing 
-
-    Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
-    Visit:
-https://www.contributor-covenant.org/version/2/0/code_of_conduct/ to have more information.
-
-    To contribute 
-     * Add an issue
-     * Create a new branch with format-name: 
-        - (feature/name/your-name) or (bug/name/your-name) 
-     * Make a pull request.
+  No contributions at this time
 
   ## Questions
 
