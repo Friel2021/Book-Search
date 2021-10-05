@@ -22,7 +22,7 @@
 
  ## Application
 
-  To go to the deployed application go to:
+Deployed application :
 https://frozen-atoll-29028.herokuapp.com/
 
  ## Tools
