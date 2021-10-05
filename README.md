@@ -13,14 +13,14 @@
 
 
 
-  ## Table of Contents 
+ ## Table of Contents 
   * [Application](#Application)
   * [Tools](#Tools)
   * [Contributing](#contributing)
   * [Questions](#questions)
   
 
-  ## Application
+ ## Application
 
   To go to the deployed application go to:
 https://frozen-atoll-29028.herokuapp.com/
@@ -37,10 +37,10 @@ https://frozen-atoll-29028.herokuapp.com/
 * HTML and CSS
 * Heroku
 
-  ## Contributing 
+ ## Contributing 
   No contributions at this time
 
-  ## Questions
+ ## Questions
 
     If you have more questions about this application, you can contact me by:
       email: Friel2009@gmail.com
