@@ -41,7 +41,6 @@ https://frozen-atoll-29028.herokuapp.com/
   No contributions at this time
 
  ## Questions
-
     If you have more questions about this application, you can contact me by:
       email: Friel2009@gmail.com
       GitHub username: Friel2021
