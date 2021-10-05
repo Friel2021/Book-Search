@@ -10,6 +10,7 @@
 
   ## Table of Contents 
   * [Application](#Application)
+  * [Tools](#Tools)
   * [Features](#Features)
   * [License](#license)
   * [Contributing](#contributing)
@@ -21,9 +22,21 @@
   To go to the deployed application go to:
 https://frozen-atoll-29028.herokuapp.com/
 
+ ## Tools
+ 
+ * Create React App
+* React
+* Node.js
+* Express.js
+* MongoDB and Mongoose
+* JSON Web Tokens
+* JavaScript ES5 and ES6
+* HTML and CSS
+* Heroku
+
   ## Features
 
-  * Search Books, 
+* Search Books, 
 
 ![main page]()
 
