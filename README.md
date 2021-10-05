@@ -3,7 +3,7 @@
   ## Description 
 
   A Google Books API search engine built with a RESTful API, and refactor it to be a GraphQL API. Built with Apollo Server.
-  Where users can search for books and saved them in their accounts.
+  Where users can search for books and access them again by logging in.
   
  ![FireShot Capture 019 - Google Book Search - frozen-atoll-29028 herokuapp com](https://user-images.githubusercontent.com/87154134/135940911-3b6ac11e-67de-429f-87bf-9a8564a816a5.png)
 
