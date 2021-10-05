@@ -29,14 +29,14 @@ https://frozen-atoll-29028.herokuapp.com/
 * Node.js
 * Express.js
 * MongoDB and Mongoose
-* JSON Web Tokenk
+* JSON Web Tokens
 * JavaScript ES5 and ES6
 * HTML and CSS
 * Heroku
 
   ## Features
 
-  * Search Books, 
+* Search Books, 
 
 ![main page]()
 
