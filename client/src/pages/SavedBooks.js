@@ -1,7 +1,4 @@
 import React from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
 import {
   Jumbotron,
   Container,
@@ -10,16 +7,25 @@ import {
   Button,
 } from "react-bootstrap";
 
-// import { getMe, deleteBook } from '../utils/API';
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  // const [userData, setUserData] = useState({});
   const { loading, data } = useQuery(GET_ME);
-  const userData = data?.me || [];
-  // const loggedIn = Auth.loggedIn();
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [deleteBook] = useMutation(REMOVE_BOOK);
+  const userData = data?.me || {};
+
+  if (!userData?.username) {
+    return (
+      <h4>
+        You need to be logged in to see this page. Use the navigation links
+        above to sign up or log in!
+      </h4>
+    );
+  }
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -30,19 +36,31 @@ const SavedBooks = () => {
     }
 
     try {
-      await removeBook({
-        variables: { bookId },
+      await deleteBook({
+        variables: { bookId: bookId },
+        update: (cache) => {
+          const data = cache.readQuery({ query: GET_ME });
+          const userDataCache = data.me;
+          const savedBooksCache = userDataCache.savedBooks;
+          const updatedBookCache = savedBooksCache.filter(
+            (book) => book.bookId !== bookId
+          );
+          data.me.savedBooks = updatedBookCache;
+          cache.writeQuery({
+            query: GET_ME,
+            data: { data: { ...data.me.savedBooks } },
+          });
+        },
       });
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <h2>LOADING...</h2>;
   }
 
   return (
@@ -75,27 +93,18 @@ const SavedBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className="small">Authors: {book.authors}</p>
                   {book.link ? (
-                    <p className="small">
-                      <a
-                        href={book.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Link: {book.link}
-                      </a>
-                    </p>
-                  ) : (
-                    <p className="small">No link to Google Books found.</p>
-                  )}
+                    <Card.Text>
+                      <a href={book.link}>More Information on Google Books</a>
+                    </Card.Text>
+                  ) : null}
                   <Card.Text>{book.description}</Card.Text>
                   <Button
                     className="btn-block btn-danger"
                     onClick={() => handleDeleteBook(book.bookId)}
                   >
-                    Delete this Book!
+                    Delete this Book
                   </Button>
                 </Card.Body>
-                {error && <div> Something went wrong...</div>}
               </Card>
             );
           })}

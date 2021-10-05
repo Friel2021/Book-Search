@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { SAVE_BOOK } from "../utils/mutations.js";
-import { useMutation } from "@apollo/react-hooks";
 import {
   Jumbotron,
   Container,
@@ -14,6 +12,9 @@ import {
 import Auth from "../utils/auth";
 import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import { useMutation } from "@apollo/react-hooks";
+import { SAVE_BOOK } from "../utils/mutations";
+import { GET_ME } from "../utils/queries";
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -24,11 +25,11 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
+  // define the save book function from the mutation
+  const [saveBook] = useMutation(SAVE_BOOK);
+
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-
-  const [saveBook, { error }] = useMutation(SAVE_BOOK);
-
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
@@ -55,8 +56,8 @@ const SearchBooks = () => {
         authors: book.volumeInfo.authors || ["No author to display"],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || "",
         link: book.volumeInfo.infoLink,
+        image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
 
       setSearchedBooks(bookData);
@@ -80,8 +81,18 @@ const SearchBooks = () => {
 
     try {
       await saveBook({
-        variables: { input: bookToSave },
+        variables: { book: bookToSave },
+        update: (cache) => {
+          const { me } = cache.readQuery({ query: GET_ME });
+          // console.log(me)
+          // console.log(me.savedBooks)
+          cache.writeQuery({
+            query: GET_ME,
+            data: { me: { ...me, savedBooks: [...me.savedBooks, bookToSave] } },
+          });
+        },
       });
+
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
@@ -136,16 +147,6 @@ const SearchBooks = () => {
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
                   <p className="small">Authors: {book.authors}</p>
-                  <p className="small">
-                    Link:{" "}
-                    <a
-                      href={book.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {book.link}
-                    </a>
-                  </p>
                   <Card.Text>{book.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
@@ -163,7 +164,6 @@ const SearchBooks = () => {
                     </Button>
                   )}
                 </Card.Body>
-                {error && <div> Something went wrong...</div>}
               </Card>
             );
           })}
